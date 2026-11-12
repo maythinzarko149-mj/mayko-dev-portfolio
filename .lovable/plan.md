@@ -1,24 +1,34 @@
-# Put your portfolio live on your Cloudflare domain
+# Connect your Cloudflare domain to GitHub Pages
 
-Lovable can't host your site on Cloudflare's own hosting. Instead, Lovable hosts the site and your Cloudflare domain points to it. Visitors still see your own domain, and your domain and its settings stay at Cloudflare. No code changes are needed.
+Your portfolio already publishes to GitHub Pages automatically from the `main` branch. It already works on a root domain too: once a custom domain is set, it builds without the repository name in its links. So the code barely needs to change.
 
-## What I will do
-1. Run a security check, then publish the portfolio on Lovable (it gets a free lovable.app address first).
-2. Make sure the page titles and descriptions are right for sharing links.
-3. Check your domain and open the "Connect domain" card in chat for it.
+## What I will change
+1. Add a short "Custom domain with Cloudflare" section to the README with the steps below.
+2. Add a test that checks a custom domain (no repository subpath) gives correct page links like `/certificates/...`.
 
 ## What you will do (step by step)
-1. Tell me your domain name (for example `maythinzarko.com`).
-2. In the connect card, choose your Cloudflare domain. If asked, sign in to Cloudflare and allow access. Lovable adds the needed records for you.
-3. If you'd rather add them yourself: in Cloudflare open your domain, go to **DNS → Records**, and add the records Lovable shows:
-   - **A** record `@` → the IP address Lovable shows
-   - **A** record `www` → the same IP address
-   - **TXT** record `_lovable` → the `lovable_verify=...` value shown
-   - **TXT** record `_lovable.www` → its own `lovable_verify=...` value
-   - Set the A records to **DNS only** (grey cloud) to start with. If you want the orange cloud (Cloudflare proxy), tick **Uses Cloudflare or similar proxy** under **Advanced** when connecting.
-4. Delete any old A, AAAA or CNAME records for `@` or `www` that point somewhere else.
-5. Wait. It's usually minutes but can take up to 72 hours. Lovable sets up https on its own and the domain shows **Active**.
+
+### A. Make sure GitHub Pages works first
+1. In GitHub, open your repository, then **Settings → Pages**.
+2. Under **Source**, choose **GitHub Actions**.
+3. Open **Actions → Deploy portfolio to GitHub Pages → Run workflow**. Wait for the green tick.
+
+### B. Add DNS records in Cloudflare
+Open your domain in Cloudflare, then **DNS → Records**, and add:
+- For the main domain (`yourdomain.com`), four **A** records named `@`:
+  `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+- For `www`: a **CNAME** record named `www` pointing to `yourgithubname.github.io`
+- Set the cloud to **DNS only (grey)** for now. This lets GitHub issue the https certificate.
+- Delete any old A, AAAA or CNAME records for `@` or `www` that point somewhere else.
+
+### C. Tell GitHub about the domain
+1. In **Settings → Pages → Custom domain**, type `yourdomain.com` and click **Save**.
+2. Wait until the DNS check passes (minutes to a few hours), then tick **Enforce HTTPS**.
+3. Run the workflow again (**Actions → Run workflow**) so links are rebuilt for the new address.
+
+### D. Optional: turn on the Cloudflare orange cloud
+After HTTPS works, you may switch the records to **Proxied (orange)**. Then in Cloudflare set **SSL/TLS → Overview** to **Full** (not Flexible), or the site will loop.
 
 ## Notes
-- Custom domains need a paid Lovable plan.
-- Your GitHub Pages setup keeps working; you don't need it for this.
+- Certificate files are copied from your Lovable site during each GitHub build, so keep that site available.
+- Want me to fill in your real domain and GitHub username? Just tell me them.
