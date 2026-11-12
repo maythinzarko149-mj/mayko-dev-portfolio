@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "build:pages": "bun run scripts/prepare-github-pages.ts && GITHUB_PAGES=true vite build",
+    "verify:pages": "bun run scripts/verify-github-pages.ts",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",

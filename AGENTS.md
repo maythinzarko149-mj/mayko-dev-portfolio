@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- All visible copy is bilingual (en/th) via `src/lib/i18n.tsx` (`t()` for UI strings, `l()` for `{en, th}` data); never hardcode single-language text in components. Why: the language switch must cover every page.
+- Certificate content lives in `src/data/certificates.ts`; images and PDFs are Lovable Assets pointers in `src/assets/certs/`. Why: one source for cards, detail pages and tests.
+- GitHub Pages uses the opt-in GITHUB_PAGES static export and the main-branch Actions workflow; keep normal Lovable builds unchanged. Why: Pages serves static files, not the SSR server.
+- Enumerate certificate URLs from the data source and copy referenced asset bytes during Pages preparation; use Vite BASE_URL for local assets and router navigation. Why: repository subpaths and downloads must work without Lovable's asset gateway.
