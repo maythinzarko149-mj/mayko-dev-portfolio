@@ -15,14 +15,14 @@ Your portfolio already publishes to GitHub Pages automatically from the `main` b
 
 ### B. Add DNS records in Cloudflare
 Open your domain in Cloudflare, then **DNS → Records**, and add:
-- For the main domain (`yourdomain.com`), four **A** records named `@`:
+- For the main domain (`mayko.dev`), four **A** records named `@`:
   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-- For `www`: a **CNAME** record named `www` pointing to `yourgithubname.github.io`
-- Set the cloud to **DNS only (grey)** for now. This lets GitHub issue the https certificate.
+- For `www`: a **CNAME** record named `www` pointing to `maythinzarko149-mj.github.io`
+- Set every A and www record to **DNS only (grey)**. Right now they are Proxied (orange), which is why GitHub shows "improperly configured".
 - Delete any old A, AAAA or CNAME records for `@` or `www` that point somewhere else.
 
 ### C. Tell GitHub about the domain
-1. In **Settings → Pages → Custom domain**, type `yourdomain.com` and click **Save**.
+1. In **Settings → Pages → Custom domain**, type `mayko.dev` and click **Save**.
 2. Wait until the DNS check passes (minutes to a few hours), then tick **Enforce HTTPS**.
 3. Run the workflow again (**Actions → Run workflow**) so links are rebuilt for the new address.
 
@@ -31,4 +31,4 @@ After HTTPS works, you may switch the records to **Proxied (orange)**. Then in C
 
 ## Notes
 - Certificate files are copied from your Lovable site during each GitHub build, so keep that site available.
-- Want me to fill in your real domain and GitHub username? Just tell me them.
+- Email records (MX, TXT) in Cloudflare stay unchanged.
