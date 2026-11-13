@@ -42,6 +42,15 @@ Lovable preview and publishing continue to work normally.
 For a local static export: `VITE_BASE_PATH=/repository/ bun run build:pages`, followed
 by `bun run verify:pages`. Publish **dist/client**, never the source folder or server output.
 
+### Custom domain (mayko.dev on Cloudflare)
+
+1. In Cloudflare **DNS → Records**, keep four **A** records for `@`: 185.199.108.153, 185.199.109.153, 185.199.110.153, 185.199.111.153.
+2. Set **www** as a **CNAME** to `maythinzarko149-mj.github.io`.
+3. Set those records to **DNS only** (grey cloud) until GitHub issues HTTPS. Leave email (MX/TXT) records alone.
+4. In GitHub **Settings → Pages → Custom domain**, enter `mayko.dev`, Save, click **Check again**, then tick **Enforce HTTPS**.
+5. Re-run the workflow so pages build for the root address.
+6. Optional: re-enable the orange cloud and set Cloudflare **SSL/TLS** to **Full**.
+
 ### Local development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).

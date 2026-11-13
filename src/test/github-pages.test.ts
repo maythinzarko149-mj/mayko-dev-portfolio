@@ -45,4 +45,10 @@ describe("GitHub Pages deployment", () => {
     expect(assets.filter((name) => name.endsWith(".pdf.asset.json"))).toHaveLength(13);
     expect(assets.filter((name) => name.endsWith(".jpg.asset.json"))).toHaveLength(13);
   });
+
+  it("builds root links when served from a custom domain", () => {
+    const router = createRouter({ routeTree, basepath: normalizeBasePath(""), context: { queryClient: new QueryClient() } });
+    expect(router.buildLocation({ to: "/certificates/$id", params: { id: "java-basic-programming" } }).href)
+      .toBe("/certificates/java-basic-programming");
+  });
 });
